@@ -9,7 +9,7 @@ services:
       - ../:/var/www
       - ./php/php.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
-      - crawler-network
+      - laravel-network
   webserver:
     image: nginx:alpine
     ports:
@@ -18,7 +18,7 @@ services:
       - ../:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
-      - crawler-network
+      - laravel-network
   db:
     image: mysql:5.7
     environment:
@@ -28,7 +28,7 @@ services:
       - ./mysql/mysql_data:/var/lib/mysql/
       - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
-      - crawler-network
+      - laravel-network
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -38,9 +38,9 @@ services:
       MYSQL_ROOT_PASSWORD: laravel
       PMA_HOST: db
     networks:
-      - crawler-network
+      - laravel-network
 
 #Docker Networks
 networks:
-  crawler-network:
+  laravel-network:
     driver: bridge
