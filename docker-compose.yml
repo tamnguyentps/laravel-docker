@@ -1,21 +1,19 @@
 version: '3'
 services:
   app:
-    container_name: app
-    build:
-      context: ./php
+    image: tabenguyen/laravel-php:1.0
     working_dir: /var/www
     volumes:
-      - ../:/var/www
+      # - ../:/var/www
       - ./php/php.ini:/usr/local/etc/php/conf.d/local.ini
     networks:
       - laravel-network
   webserver:
     image: nginx:alpine
     ports:
-      - "8580:80"
+      - "8080:80"
     volumes:
-      - ../:/var/www
+      # - ../:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - laravel-network
@@ -25,14 +23,14 @@ services:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./mysql/mysql_data:/var/lib/mysql/
+      # - ./mysql/mysql_data:/var/lib/mysql/
       - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - laravel-network
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8581:80"
+      - "8081:80"
     environment:
       MYSQL_USERNAME: laravel
       MYSQL_ROOT_PASSWORD: laravel
